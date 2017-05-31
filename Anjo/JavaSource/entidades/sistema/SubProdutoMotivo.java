@@ -1,5 +1,6 @@
 package entidades.sistema;
 
+import entidades.AbstractEntity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -7,80 +8,38 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="anjo_Sub_Produto_Motivo")
-public class SubProdutoMotivo {
-	
-	@Id
-	@GeneratedValue
-	private Integer id;
-	
-	private String nome;
-	
-	@ManyToOne
-	private Produto produto;
-	
-	private Boolean ativo = false;
-		
-	public Integer getId() {
-		return id;
-	}
+@Table(name = "anjo_Sub_Produto_Motivo")
+public class SubProdutoMotivo extends AbstractEntity {
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    private String nome;
 
-	public String getNome() {
-		return nome;
-	}
+    @ManyToOne
+    private Produto produto;
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+    private Boolean ativo = false;
 
-	public Produto getProduto() {
-		return produto;
-	}
+    public String getNome() {
+        return nome;
+    }
 
-	public void setProduto(Produto produto) {
-		this.produto = produto;
-	}
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
-	public Boolean getAtivo() {
-		return ativo;
-	}
+    public Produto getProduto() {
+        return produto;
+    }
 
-	public void setAtivo(Boolean ativo) {
-		this.ativo = ativo;
-	}
+    public void setProduto(Produto produto) {
+        this.produto = produto;
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
-	}
+    public Boolean getAtivo() {
+        return ativo;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		SubProdutoMotivo other = (SubProdutoMotivo) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
-	}
+    public void setAtivo(Boolean ativo) {
+        this.ativo = ativo;
+    }
 
-	@Override
-	public String toString() {
-		return "SubProdutoMotivo [id=" + id + "]";
-	}	
-	
 }
