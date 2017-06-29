@@ -6,7 +6,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "anjo_Info_Equipamento")
+@Table(name = "anjo_Info_Equipamento_2")
 public class InfoEquipamento extends AbstractEntity {
 
     @ManyToOne

@@ -4,8 +4,6 @@ import entidades.AbstractEntity;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -14,7 +12,7 @@ import entidades.UsuarioEfika;
 import util.JSFUtil;
 
 @Entity
-@Table(name = "anjo_Atendimento_inc")
+@Table(name = "anjo_Atendimento_inc_2")
 public class AtendimentoInc extends AbstractEntity {
 
     private String numero;

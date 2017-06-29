@@ -28,332 +28,327 @@ import util.JSFUtil;
 @ViewScoped
 public class AtendimentoBean {
 
-	@ManagedProperty(value="#{loginBean}")
-	private LoginBean sessao;
+    @ManagedProperty(value = "#{loginBean}")
+    private LoginBean sessao;
 
-	private Atendimento atendimento;
+    private Atendimento atendimento;
 
-	private InfoProduto infoProduto;
+    private InfoProduto infoProduto;
 
-	private InfoEquipamento infoEquipamento;
-	
-	private Solucao solucao;
-	
-	private DetalheDuvida detalheDuvida;
-	
-	@EJB
-	private AtendimentoServico atendimentoServico;
+    private InfoEquipamento infoEquipamento;
 
-	@EJB
-	private InfoProdutoServico infoProdutoServico;
+    private Solucao solucao;
 
-	@EJB
-	private DuvidaServico duvidaServico;
+    private DetalheDuvida detalheDuvida;
 
-	@EJB
-	private DetalheDuvidaServico detalheDuvidaServico;
+    @EJB
+    private AtendimentoServico atendimentoServico;
 
-	@EJB
-	private InfoEquipamentoServico infoEquipamentoServico; 
+    @EJB
+    private InfoProdutoServico infoProdutoServico;
 
+    @EJB
+    private DuvidaServico duvidaServico;
 
-	@EJB
-	private ModeloServico modeloServico;
+    @EJB
+    private DetalheDuvidaServico detalheDuvidaServico;
 
+    @EJB
+    private InfoEquipamentoServico infoEquipamentoServico;
 
-	public AtendimentoBean() {
+    @EJB
+    private ModeloServico modeloServico;
 
-		this.atendimento = new Atendimento();
+    public AtendimentoBean() {
 
-		this.infoProduto = new InfoProduto();
-		
-		this.infoEquipamento = new InfoEquipamento();
-		
-		this.solucao = new Solucao();
+        this.atendimento = new Atendimento();
 
-		this.detalheDuvida = new DetalheDuvida();
-		
-	}
-	
-	@PostConstruct
-	public void init() {
-		
-		this.listarModelosLista();
-		
-	}
+        this.infoProduto = new InfoProduto();
 
-	public void cadastrarAtendimento() {
+        this.infoEquipamento = new InfoEquipamento();
 
-		try {
+        this.solucao = new Solucao();
 
-			this.validaSeCampoVazio();
-			
-			this.atendimento.setInfoProduto(this.infoProduto);
-			this.cadastrarInfoProduto();
-			
-			if (this.atendimento.getAcionadoFalhaEqp()) {
+        this.detalheDuvida = new DetalheDuvida();
 
-				this.atendimento.setInfoEquipamento(this.infoEquipamento);
-				this.cadastrarInfoEquipamento();
+    }
 
-			}
+    @PostConstruct
+    public void init() {
 
-			this.atendimento.setUsuarioEfika(this.sessao.getUsuario());
-			this.atendimentoServico.cadastrarAtendimento(this.atendimento);
+        this.listarModelosLista();
 
-			JSFUtil.addInfoMessage("Atendimento cadastrado com sucesso.");
-			this.atendimento = new Atendimento();
+    }
 
-		} catch (Exception e) {
+    public void cadastrarAtendimento() {
 
-			JSFUtil.addErrorMessage(e.getMessage());
+        try {
 
-		}
+            this.validaSeCampoVazio();
 
-	}
+            this.atendimento.setInfoProduto(this.infoProduto);
+            this.cadastrarInfoProduto();
 
-	public void cadastrarInfoProduto() {
+            if (this.atendimento.getAcionadoFalhaEqp()) {
 
-		try {
+                this.atendimento.setInfoEquipamento(this.infoEquipamento);
+                this.cadastrarInfoEquipamento();
 
-			this.infoProdutoServico.cadastrarInfoProduto(this.infoProduto);
-			this.infoProduto = new InfoProduto();
+            }
 
-		} catch (Exception e) {
+            this.atendimento.setUsuarioEfika(this.sessao.getUsuario());
+            this.atendimentoServico.cadastrarAtendimento(this.atendimento);
 
-			JSFUtil.addErrorMessage(e.getMessage());
+            JSFUtil.addInfoMessage("Atendimento cadastrado com sucesso.");
+            this.atendimento = new Atendimento();
 
-		}
+        } catch (Exception e) {
 
-	}
+            JSFUtil.addErrorMessage(e.getMessage());
 
+        }
 
-	public void cadastrarInfoEquipamento() {
+    }
 
-		try {
+    public void cadastrarInfoProduto() {
 
-			this.infoEquipamentoServico.cadastrarInfoEquipamento(this.infoEquipamento);
-			this.infoEquipamento = new InfoEquipamento();
+        try {
 
-		} catch (Exception e) {
+            this.infoProdutoServico.cadastrarInfoProduto(this.infoProduto);
+            this.infoProduto = new InfoProduto();
 
-			JSFUtil.addErrorMessage(e.getMessage());
+        } catch (Exception e) {
 
-		}
+            JSFUtil.addErrorMessage(e.getMessage());
 
-	}
+        }
 
-	public void validaSeCampoVazio() throws Exception {
+    }
 
-		String nomeErro = "Por favor preencha os seguintes campos";
+    public void cadastrarInfoEquipamento() {
 
-		Boolean erro = false;
+        try {
 
-		if (this.atendimento.getMatriculaOperador().isEmpty()) {
+            this.infoEquipamentoServico.cadastrarInfoEquipamento(this.infoEquipamento);
+            this.infoEquipamento = new InfoEquipamento();
 
-			nomeErro = nomeErro + " (matricula) ";
-			erro = true;
+        } catch (Exception e) {
 
-		}
+            JSFUtil.addErrorMessage(e.getMessage());
 
-		if (this.atendimento.getInstancia().isEmpty()) {
+        }
 
-			nomeErro = nomeErro + " (instância) ";
-			erro = true;
+    }
 
-		}
+    public void validaSeCampoVazio() throws Exception {
 
-		if (this.atendimento.getTransmissao() == null) {
+        String nomeErro = "Por favor preencha os seguintes campos";
 
-			nomeErro = nomeErro + " (transmissão) ";
-			erro = true;
+        Boolean erro = false;
 
-		}		
+        if (this.atendimento.getMatriculaOperador().isEmpty()) {
 
-		if (this.atendimento.getOrdem() == null) {
+            nomeErro = nomeErro + " (matricula) ";
+            erro = true;
 
-			nomeErro = nomeErro + " (ordem) ";
-			erro = true;
+        }
 
-		}
+        if (this.atendimento.getInstancia().isEmpty()) {
 
-		if (this.atendimento.getCodigo().isEmpty()) {
+            nomeErro = nomeErro + " (instância) ";
+            erro = true;
 
-			nomeErro = nomeErro + " (código) ";
-			erro = true;
+        }
 
-		}
+        if (this.atendimento.getTransmissao() == null) {
 
-		if (this.infoProduto.getProduto() == null) {
+            nomeErro = nomeErro + " (transmissão) ";
+            erro = true;
 
-			nomeErro = nomeErro + " (produto) ";
-			erro = true;
+        }
 
-		}
+        if (this.atendimento.getOrdem() == null) {
 
-		if (this.infoProduto.getSubProdutoMotivo() == null) {
+            nomeErro = nomeErro + " (ordem) ";
+            erro = true;
 
-			nomeErro = nomeErro + " (sub produto) ";
-			erro = true;
+        }
 
-		}		
+        if (this.atendimento.getCodigo().isEmpty()) {
 
-		if (this.atendimento.getDuvida() == null) {
+            nomeErro = nomeErro + " (código) ";
+            erro = true;
 
-			nomeErro = nomeErro + " (duvida) ";
-			erro = true;
+        }
 
-		}
+        if (this.infoProduto.getProduto() == null) {
 
-		if (this.atendimento.getDetalheDuvida() == null) {
+            nomeErro = nomeErro + " (produto) ";
+            erro = true;
 
-			nomeErro = nomeErro + " (detalhe da duvida) ";
-			erro = true;
+        }
 
-		}
+        if (this.infoProduto.getSubProdutoMotivo() == null) {
 
-		if (this.atendimento.getAcionadoSuporte() && this.atendimento.getNomeSuporte().isEmpty()) {
+            nomeErro = nomeErro + " (sub produto) ";
+            erro = true;
 
-			nomeErro = nomeErro + " (nome do suporte) ";
-			erro = true;
+        }
 
-		}
+        if (this.atendimento.getDuvida() == null) {
 
-		if (this.atendimento.getAcionadoFalhaSis() && this.atendimento.getFalhaSis().isEmpty()) {
+            nomeErro = nomeErro + " (duvida) ";
+            erro = true;
 
-			nomeErro = nomeErro + " (falha sistemica) ";
-			erro = true;
+        }
 
-		}
+        if (this.atendimento.getDetalheDuvida() == null) {
 
-		if (this.atendimento.getAcionadoFalhaEqp() && this.atendimento.getFalhaEqp().isEmpty()) {
+            nomeErro = nomeErro + " (detalhe da duvida) ";
+            erro = true;
 
-			nomeErro = nomeErro + " (falha equipamento) ";
-			erro = true;
+        }
 
-		}
+        if (this.atendimento.getAcionadoSuporte() && this.atendimento.getNomeSuporte().isEmpty()) {
 
-		if (this.atendimento.getAcionadoFalhaEqp() && this.infoEquipamento.getEquipamento() == null) {
+            nomeErro = nomeErro + " (nome do suporte) ";
+            erro = true;
 
-			nomeErro = nomeErro + " (equipamento) ";
-			erro = true;
+        }
 
-		}
+        if (this.atendimento.getAcionadoFalhaSis() && this.atendimento.getFalhaSis().isEmpty()) {
 
-		if (this.atendimento.getAcionadoFalhaEqp() && this.infoEquipamento.getFabricante() == null) {
+            nomeErro = nomeErro + " (falha sistemica) ";
+            erro = true;
 
-			nomeErro = nomeErro + " (fabricante) ";
-			erro = true;
+        }
 
-		}
+        if (this.atendimento.getAcionadoFalhaEqp() && this.atendimento.getFalhaEqp().isEmpty()) {
 
-		if (this.atendimento.getAcionadoFalhaEqp() && this.infoEquipamento.getModelo() == null) {
+            nomeErro = nomeErro + " (falha equipamento) ";
+            erro = true;
 
-			nomeErro = nomeErro + " (modelo) ";
-			erro = true;
+        }
 
-		}
+        if (this.atendimento.getAcionadoFalhaEqp() && this.infoEquipamento.getEquipamento() == null) {
 
-		if (this.atendimento.getSolucao() == null) {
+            nomeErro = nomeErro + " (equipamento) ";
+            erro = true;
 
-			nomeErro = nomeErro + " (solução) ";
-			erro = true;
+        }
 
-		}
+        if (this.atendimento.getAcionadoFalhaEqp() && this.infoEquipamento.getFabricante() == null) {
 
-		if (erro) {
+            nomeErro = nomeErro + " (fabricante) ";
+            erro = true;
 
-			throw new Exception(nomeErro);
+        }
 
-		}
+        if (this.atendimento.getAcionadoFalhaEqp() && this.infoEquipamento.getModelo() == null) {
 
+            nomeErro = nomeErro + " (modelo) ";
+            erro = true;
 
-	}	
+        }
 
-	public List<Atendimento> listarTodosAtendimentos() {
+        if (this.atendimento.getSolucao() == null) {
 
-		return this.atendimentoServico.listarTodosAtendimentos();
+            nomeErro = nomeErro + " (solução) ";
+            erro = true;
 
-	}
+        }
 
-	public Atendimento listarAtendimentoEspecificoUsuario(UsuarioEfika usuarioEfika) {
+        if (erro) {
 
-		try {
+            throw new Exception(nomeErro);
 
-			return this.atendimentoServico.listarAtendimentoEspecificoUsuario(usuarioEfika);
+        }
 
-		} catch (Exception e) {
+    }
 
-			JSFUtil.addErrorMessage(e.getMessage());
-			return null;
+    public List<Atendimento> listarTodosAtendimentos() {
 
-		}
+        return this.atendimentoServico.listarTodosAtendimentos();
 
-	}
-	
-	public List<Modelo> listarModelosLista() {
-		
-		return this.modeloServico.listarModelosLista(true);
-		
-	}
-	
-	public void selecionadoOutros(String select) {
-				
-		if (select.equalsIgnoreCase("Nenhuma das opções disponíveis")) {
-			
-			JSFUtil.addWarnMessage("Descreva no campo \"Outras Informações\"");
-		
-		}		
-		
-	}
+    }
 
-	public Atendimento getAtendimento() {
-		return atendimento;
-	}
+    public Atendimento listarAtendimentoEspecificoUsuario(UsuarioEfika usuarioEfika) {
 
-	public void setAtendimento(Atendimento atendimento) {
-		this.atendimento = atendimento;
-	}
+        try {
 
-	public InfoProduto getInfoProduto() {
-		return infoProduto;
-	}
+            return this.atendimentoServico.listarAtendimentoEspecificoUsuario(usuarioEfika);
 
-	public void setInfoProduto(InfoProduto infoProduto) {
-		this.infoProduto = infoProduto;
-	}
+        } catch (Exception e) {
 
-	public InfoEquipamento getInfoEquipamento() {
-		return infoEquipamento;
-	}
+            JSFUtil.addErrorMessage(e.getMessage());
+            return null;
 
-	public void setInfoEquipamento(InfoEquipamento infoEquipamento) {
-		this.infoEquipamento = infoEquipamento;
-	}
-	
-	public LoginBean getSessao() {
-		return sessao;
-	}
+        }
 
-	public void setSessao(LoginBean sessao) {
-		this.sessao = sessao;
-	}
+    }
 
-	public Solucao getSolucao() {
-		return solucao;
-	}
+    public List<Modelo> listarModelosLista() {
 
-	public void setSolucao(Solucao solucao) {
-		this.solucao = solucao;
-	}
+        return this.modeloServico.listarModelosLista(true);
 
-	public DetalheDuvida getDetalheDuvida() {
-		return detalheDuvida;
-	}
+    }
 
-	public void setDetalheDuvida(DetalheDuvida detalheDuvida) {
-		this.detalheDuvida = detalheDuvida;
-	}
-	
-	
+    public void selecionadoOutros(String select) {
+
+        if (select.equalsIgnoreCase("Nenhuma das opções disponíveis")) {
+
+            JSFUtil.addWarnMessage("Descreva no campo \"Outras Informações\"");
+
+        }
+
+    }
+
+    public Atendimento getAtendimento() {
+        return atendimento;
+    }
+
+    public void setAtendimento(Atendimento atendimento) {
+        this.atendimento = atendimento;
+    }
+
+    public InfoProduto getInfoProduto() {
+        return infoProduto;
+    }
+
+    public void setInfoProduto(InfoProduto infoProduto) {
+        this.infoProduto = infoProduto;
+    }
+
+    public InfoEquipamento getInfoEquipamento() {
+        return infoEquipamento;
+    }
+
+    public void setInfoEquipamento(InfoEquipamento infoEquipamento) {
+        this.infoEquipamento = infoEquipamento;
+    }
+
+    public LoginBean getSessao() {
+        return sessao;
+    }
+
+    public void setSessao(LoginBean sessao) {
+        this.sessao = sessao;
+    }
+
+    public Solucao getSolucao() {
+        return solucao;
+    }
+
+    public void setSolucao(Solucao solucao) {
+        this.solucao = solucao;
+    }
+
+    public DetalheDuvida getDetalheDuvida() {
+        return detalheDuvida;
+    }
+
+    public void setDetalheDuvida(DetalheDuvida detalheDuvida) {
+        this.detalheDuvida = detalheDuvida;
+    }
+
 }

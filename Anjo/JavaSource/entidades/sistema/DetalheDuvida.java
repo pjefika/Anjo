@@ -2,12 +2,10 @@ package entidades.sistema;
 
 import entidades.AbstractEntity;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="anjo_Detalhe_Duvida")
+@Table(name="anjo_Detalhe_Duvida_2")
 public class DetalheDuvida extends AbstractEntity {
 	
 	private String nome;

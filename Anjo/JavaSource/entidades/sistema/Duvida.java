@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "anjo_Duvida")
+@Table(name = "anjo_Duvida_2")
 public class Duvida extends AbstractEntity implements Comparable<Duvida> {
 
     private String nome;
