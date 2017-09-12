@@ -122,13 +122,13 @@ public class LoginBean implements Serializable {
 
 			if (!usuarioEfika.getAdm()) {
 
-				context.redirect("/Anjo/index.jsf");
+				context.redirect("/anjo/index.jsf");
 
 			}
 
 		} catch (Exception e) {
 
-			context.redirect("/Anjo/index.jsf");
+			context.redirect("/anjo/index.jsf");
 			JSFUtil.addErrorMessage(e.getMessage());
 
 		}		
@@ -143,13 +143,13 @@ public class LoginBean implements Serializable {
 
 			if (!logado) {
 
-				context.redirect("/Anjo/index.jsf");
+				context.redirect("/anjo/index.jsf");
 
 			}
 
 		} catch (Exception e) {
 
-			context.redirect("/Anjo/index.jsf");
+			context.redirect("/anjo/index.jsf");
 			JSFUtil.addErrorMessage(e.getMessage());
 
 		}		
@@ -184,13 +184,13 @@ public class LoginBean implements Serializable {
 
 			if (!this.listarControleUsuarioEspecifico().getAtivo()) {
 
-				context.redirect("/Anjo/index.jsf");
+				context.redirect("/anjo/index.jsf");
 
 			}
 
 		} catch (Exception e) {
 
-			context.redirect("/Anjo/index.jsf");
+			context.redirect("/anjo/index.jsf");
 			JSFUtil.addErrorMessage(e.getMessage());
 
 		}		
