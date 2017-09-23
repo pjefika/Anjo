@@ -9,6 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import entidades.UsuarioEfika;
+import javax.persistence.Temporal;
 
 @Entity
 @Table(name = "anjo_Atendimento_2")
@@ -22,6 +23,7 @@ public class Atendimento extends AbstractEntity {
 
     private String codigo;
 
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date dataRegistro;
 
     private Boolean acionadoSuporte = false;
@@ -59,6 +61,9 @@ public class Atendimento extends AbstractEntity {
 
     @ManyToOne
     private Transmissao transmissao;
+
+    public Atendimento() {
+    }
 
     public String getMatriculaOperador() {
         return matriculaOperador;

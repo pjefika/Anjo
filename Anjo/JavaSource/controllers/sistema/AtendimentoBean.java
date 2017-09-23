@@ -98,12 +98,10 @@ public class AtendimentoBean {
 
             this.atendimento.setUsuarioEfika(this.sessao.getUsuario());
             this.atendimentoServico.cadastrarAtendimento(this.atendimento);
-
             JSFUtil.addInfoMessage("Atendimento cadastrado com sucesso.");
             this.atendimento = new Atendimento();
-
         } catch (Exception e) {
-
+            e.printStackTrace();
             JSFUtil.addErrorMessage(e.getMessage());
 
         }

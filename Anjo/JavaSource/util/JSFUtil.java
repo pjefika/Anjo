@@ -1,6 +1,5 @@
 package util;
 
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -9,86 +8,80 @@ import javax.faces.context.FacesContext;
 
 public class JSFUtil {
 
-	public static void addInfoMessage(String msg) {		
+    public static void addInfoMessage(String msg) {
 
-		FacesMessage message;
+        FacesMessage message;
 
-		message = new FacesMessage("Sucesso", msg);
+        message = new FacesMessage("Sucesso", msg);
 
-		FacesContext.getCurrentInstance().addMessage(null, message);
+        FacesContext.getCurrentInstance().addMessage(null, message);
 
-	}
+    }
 
-	public static void addErrorMessage(String msg) {
+    public static void addErrorMessage(String msg) {
+        FacesMessage message;
+        message = new FacesMessage("Erro", msg);
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
 
-		FacesMessage message;
+    public static void addWarnMessage(String msg) {
 
-		message = new FacesMessage("Erro", msg);
+        FacesMessage message;
 
-		FacesContext.getCurrentInstance().addMessage(null, message);
+        message = new FacesMessage("InformaÃ§Ã£o", msg);
 
-	}
+        FacesContext.getCurrentInstance().addMessage(null, message);
 
-	public static void addWarnMessage(String msg) {
+    }
 
-		FacesMessage message;
+    public static String gerarStringAleatoria(Integer nrStrings) {
 
-		message = new FacesMessage("Informação", msg);
+        java.util.Random r = new java.util.Random();
 
-		FacesContext.getCurrentInstance().addMessage(null, message);
+        char[] goodChar = {'a', 'b', 'c', 'd', 'e', 'f', 'g',
+            'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'x', 'w',
+            'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
+            'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '1',
+            '2', '3', '4', '5', '6', '7', '8', '9'};
+        StringBuffer sb = new StringBuffer();
 
-	}
+        for (int i = 0; i < nrStrings; i++) {
+            sb.append(goodChar[r.nextInt(goodChar.length)]);
+        }
 
-	public static String gerarStringAleatoria(Integer nrStrings){
+        return sb.toString();
+    }
 
+    public static String formatarData(Date date) {
 
-		java.util.Random r = new java.util.Random();
+        String dataFormatada = null;
 
-		char[] goodChar = { 'a', 'b', 'c', 'd', 'e', 'f', 'g',
-				'h','i', 'j', 'k','l', 'm', 'n','o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'x','w',
-				'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I','J', 'K','L',
-				'M', 'N','O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z','1',
-				'2', '3', '4', '5', '6', '7', '8', '9'};
-		StringBuffer sb = new StringBuffer();
+        if (date != null) {
 
-		for (int i = 0; i < nrStrings; i++) {
-			sb.append(goodChar[r.nextInt(goodChar.length)]);
-		}
+            SimpleDateFormat formmater = new SimpleDateFormat("dd/MM/yyyy");
 
-		return sb.toString(); 
-	}
+            dataFormatada = formmater.format(date);
 
-	public static String formatarData(Date date) {
+        }
 
-		String dataFormatada = null;
+        return dataFormatada;
 
-		if (date != null) {
+    }
 
-			SimpleDateFormat formmater = new SimpleDateFormat("dd/MM/yyyy");
+    public static String formatarDataHra(Date date) {
 
-			dataFormatada = formmater.format(date);
+        String dataFormatada = null;
 
-		}	
+        if (date != null) {
 
-		return dataFormatada;
+            SimpleDateFormat formmater = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
-	}
+            dataFormatada = formmater.format(date);
 
-	public static String formatarDataHra(Date date) {
+        }
 
-		String dataFormatada = null;
+        return dataFormatada;
 
-		if (date != null) {
+    }
 
-			SimpleDateFormat formmater = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-
-			dataFormatada = formmater.format(date);
-
-		}	
-
-		return dataFormatada;
-
-
-	}
-	
 }
